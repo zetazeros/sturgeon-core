@@ -1,5 +1,4 @@
-# Trader Joe
-
+# Sturgeon Protocol core
 This repository contains all the contracts for Trader Joe.
 
 ## Deployed Contracts
