@@ -23,11 +23,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryAdd(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         uint256 c = a + b;
         if (c < a) return (false, 0);
         return (true, c);
@@ -38,11 +34,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function trySub(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b > a) return (false, 0);
         return (true, a - b);
     }
@@ -52,11 +44,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMul(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
         // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
@@ -71,11 +59,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryDiv(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a / b);
     }
@@ -85,11 +69,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMod(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a % b);
     }
@@ -256,19 +236,12 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     // EIP 2612
     function permit(
@@ -317,10 +290,7 @@ interface IBar {
 pragma solidity 0.6.12;
 
 interface IMasterChef {
-    function userInfo(uint256 pid, address owner)
-        external
-        view
-        returns (uint256, uint256);
+    function userInfo(uint256 pid, address owner) external view returns (uint256, uint256);
 }
 
 contract JoeVote {

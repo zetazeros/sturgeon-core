@@ -356,10 +356,6 @@ contract BoringOwnable is BoringOwnableData {
 pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
-
-
-
-
 interface IMasterChef {
     struct PoolInfo {
         IJoeERC20 lpToken; // Address of LP token contract.
@@ -524,7 +520,7 @@ contract FarmLens is BoringOwnable {
             IMasterChef.PoolInfo memory pool = chef.poolInfo(whitelistedPids[i]);
             IJoePair lpToken = IJoePair(address(pool.lpToken));
 
-            //get pool information 
+            //get pool information
             farmPairs[i].id = whitelistedPids[i];
             farmPairs[i].allocPoint = pool.allocPoint;
 

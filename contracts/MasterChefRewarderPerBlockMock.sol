@@ -23,11 +23,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryAdd(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         uint256 c = a + b;
         if (c < a) return (false, 0);
         return (true, c);
@@ -38,11 +34,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function trySub(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b > a) return (false, 0);
         return (true, a - b);
     }
@@ -52,11 +44,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMul(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
         // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
@@ -71,11 +59,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryDiv(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a / b);
     }
@@ -85,11 +69,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMod(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a % b);
     }
@@ -302,17 +282,11 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(
-            address(this).balance >= amount,
-            "Address: insufficient balance"
-        );
+        require(address(this).balance >= amount, "Address: insufficient balance");
 
         // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
         (bool success, ) = recipient.call{value: amount}("");
-        require(
-            success,
-            "Address: unable to send value, recipient may have reverted"
-        );
+        require(success, "Address: unable to send value, recipient may have reverted");
     }
 
     /**
@@ -333,10 +307,7 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data)
-        internal
-        returns (bytes memory)
-    {
+    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
         return functionCall(target, data, "Address: low-level call failed");
     }
 
@@ -370,13 +341,7 @@ library Address {
         bytes memory data,
         uint256 value
     ) internal returns (bytes memory) {
-        return
-            functionCallWithValue(
-                target,
-                data,
-                value,
-                "Address: low-level call with value failed"
-            );
+        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
     }
 
     /**
@@ -391,16 +356,11 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(
-            address(this).balance >= value,
-            "Address: insufficient balance for call"
-        );
+        require(address(this).balance >= value, "Address: insufficient balance for call");
         require(isContract(target), "Address: call to non-contract");
 
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory returndata) = target.call{value: value}(
-            data
-        );
+        (bool success, bytes memory returndata) = target.call{value: value}(data);
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -410,17 +370,8 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data)
-        internal
-        view
-        returns (bytes memory)
-    {
-        return
-            functionStaticCall(
-                target,
-                data,
-                "Address: low-level static call failed"
-            );
+    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
+        return functionStaticCall(target, data, "Address: low-level static call failed");
     }
 
     /**
@@ -447,16 +398,8 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data)
-        internal
-        returns (bytes memory)
-    {
-        return
-            functionDelegateCall(
-                target,
-                data,
-                "Address: low-level delegate call failed"
-            );
+    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
+        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
     }
 
     /**
@@ -545,10 +488,7 @@ pragma solidity >=0.6.0 <0.8.0;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -591,10 +531,7 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
     }
@@ -609,19 +546,12 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     // EIP 2612
     function permit(
@@ -641,23 +571,17 @@ pragma solidity 0.6.12;
 
 library SafeERC20 {
     function safeSymbol(IERC20 token) internal view returns (string memory) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x95d89b41)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x95d89b41));
         return success && data.length > 0 ? abi.decode(data, (string)) : "???";
     }
 
     function safeName(IERC20 token) internal view returns (string memory) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x06fdde03)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x06fdde03));
         return success && data.length > 0 ? abi.decode(data, (string)) : "???";
     }
 
     function safeDecimals(IERC20 token) public view returns (uint8) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x313ce567)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x313ce567));
         return success && data.length == 32 ? abi.decode(data, (uint8)) : 18;
     }
 
@@ -666,13 +590,8 @@ library SafeERC20 {
         address to,
         uint256 amount
     ) internal {
-        (bool success, bytes memory data) = address(token).call(
-            abi.encodeWithSelector(0xa9059cbb, to, amount)
-        );
-        require(
-            success && (data.length == 0 || abi.decode(data, (bool))),
-            "SafeERC20: Transfer failed"
-        );
+        (bool success, bytes memory data) = address(token).call(abi.encodeWithSelector(0xa9059cbb, to, amount));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: Transfer failed");
     }
 
     function safeTransferFrom(
@@ -683,10 +602,7 @@ library SafeERC20 {
         (bool success, bytes memory data) = address(token).call(
             abi.encodeWithSelector(0x23b872dd, from, address(this), amount)
         );
-        require(
-            success && (data.length == 0 || abi.decode(data, (bool))),
-            "SafeERC20: TransferFrom failed"
-        );
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: TransferFrom failed");
     }
 }
 
@@ -700,10 +616,7 @@ interface IRewarder {
 
     function onJoeReward(address user, uint256 newLpAmount) external;
 
-    function pendingTokens(address user)
-        external
-        view
-        returns (uint256 pending);
+    function pendingTokens(address user) external view returns (uint256 pending);
 }
 
 interface IMasterChef {
@@ -780,11 +693,8 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
     event OnReward(address indexed user, uint256 amount);
     event RewardRateUpdated(uint256 oldRate, uint256 newRate);
 
-    modifier onlyMCV2 {
-        require(
-            msg.sender == address(MCV2),
-            "onlyMCV2: only MasterChef V2 can call this function"
-        );
+    modifier onlyMCV2() {
+        require(msg.sender == address(MCV2), "onlyMCV2: only MasterChef V2 can call this function");
         _;
     }
 
@@ -796,22 +706,10 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
         IMasterChef _MCV1,
         IMasterChefJoeV2 _MCV2
     ) public {
-        require(
-            Address.isContract(address(_rewardToken)),
-            "constructor: reward token must be a valid contract"
-        );
-        require(
-            Address.isContract(address(_lpToken)),
-            "constructor: LP token must be a valid contract"
-        );
-        require(
-            Address.isContract(address(_MCV1)),
-            "constructor: MasterChef must be a valid contract"
-        );
-        require(
-            Address.isContract(address(_MCV2)),
-            "constructor: MasterChefJoeV2 must be a valid contract"
-        );
+        require(Address.isContract(address(_rewardToken)), "constructor: reward token must be a valid contract");
+        require(Address.isContract(address(_lpToken)), "constructor: LP token must be a valid contract");
+        require(Address.isContract(address(_MCV1)), "constructor: MasterChef must be a valid contract");
+        require(Address.isContract(address(_MCV2)), "constructor: MasterChefJoeV2 must be a valid contract");
 
         rewardToken = _rewardToken;
         lpToken = _lpToken;
@@ -819,10 +717,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
         MCV1_pid = _MCV1_pid;
         MCV1 = _MCV1;
         MCV2 = _MCV2;
-        poolInfo = PoolInfo({
-            lastRewardBlock: block.number,
-            accTokenPerShare: 0
-        });
+        poolInfo = PoolInfo({lastRewardBlock: block.number, accTokenPerShare: 0});
     }
 
     /// @notice Deposits a dummy token to a MaterChefV1 farm so that this contract can claim reward tokens.
@@ -846,9 +741,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
             if (lpSupply > 0) {
                 uint256 blocks = block.number.sub(pool.lastRewardBlock);
                 uint256 tokenReward = blocks.mul(tokenPerBlock);
-                pool.accTokenPerShare = pool.accTokenPerShare.add(
-                    (tokenReward.mul(ACC_TOKEN_PRECISION) / lpSupply)
-                );
+                pool.accTokenPerShare = pool.accTokenPerShare.add((tokenReward.mul(ACC_TOKEN_PRECISION) / lpSupply));
             }
 
             pool.lastRewardBlock = block.number;
@@ -875,11 +768,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
     /// @notice Function called by MasterChefJoeV2 whenever staker claims JOE harvest. Allows staker to also receive a 2nd reward token.
     /// @param _user Address of user
     /// @param _lpAmount Number of LP tokens the user has
-    function onJoeReward(address _user, uint256 _lpAmount)
-        external
-        override
-        onlyMCV2
-    {
+    function onJoeReward(address _user, uint256 _lpAmount) external override onlyMCV2 {
         updatePool();
         PoolInfo memory pool = poolInfo;
         UserInfo storage user = userInfo[_user];
@@ -887,9 +776,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
         // if user had deposited
         if (user.amount > 0) {
             harvestFromMasterChefV1();
-            pendingBal = (user.amount.mul(pool.accTokenPerShare) /
-                ACC_TOKEN_PRECISION)
-            .sub(user.rewardDebt);
+            pendingBal = (user.amount.mul(pool.accTokenPerShare) / ACC_TOKEN_PRECISION).sub(user.rewardDebt);
             uint256 rewardBal = rewardToken.balanceOf(address(this));
             if (pendingBal > rewardBal) {
                 rewardToken.safeTransfer(_user, rewardBal);
@@ -899,9 +786,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
         }
 
         user.amount = _lpAmount;
-        user.rewardDebt =
-            user.amount.mul(pool.accTokenPerShare) /
-            ACC_TOKEN_PRECISION;
+        user.rewardDebt = user.amount.mul(pool.accTokenPerShare) / ACC_TOKEN_PRECISION;
 
         emit OnReward(_user, pendingBal);
     }
@@ -909,12 +794,7 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
     /// @notice View function to see pending tokens
     /// @param _user Address of user.
     /// @return pending reward for a given user.
-    function pendingTokens(address _user)
-        external
-        view
-        override
-        returns (uint256 pending)
-    {
+    function pendingTokens(address _user) external view override returns (uint256 pending) {
         PoolInfo memory pool = poolInfo;
         UserInfo storage user = userInfo[_user];
 
@@ -924,13 +804,9 @@ contract MasterChefRewarderPerBlockMock is IRewarder, Ownable {
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             uint256 blocks = block.number.sub(pool.lastRewardBlock);
             uint256 tokenReward = blocks.mul(tokenPerBlock);
-            accTokenPerShare = accTokenPerShare.add(
-                tokenReward.mul(ACC_TOKEN_PRECISION) / lpSupply
-            );
+            accTokenPerShare = accTokenPerShare.add(tokenReward.mul(ACC_TOKEN_PRECISION) / lpSupply);
         }
 
-        pending = (user.amount.mul(accTokenPerShare) / ACC_TOKEN_PRECISION).sub(
-            user.rewardDebt
-        );
+        pending = (user.amount.mul(accTokenPerShare) / ACC_TOKEN_PRECISION).sub(user.rewardDebt);
     }
 }

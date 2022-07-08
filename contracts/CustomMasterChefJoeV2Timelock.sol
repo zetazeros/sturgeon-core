@@ -169,7 +169,11 @@ library SafeMath {
      *
      * - Subtraction cannot overflow.
      */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b <= a, errorMessage);
         return a - b;
     }
@@ -189,7 +193,11 @@ library SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         return a / b;
     }
@@ -209,14 +217,17 @@ library SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         return a % b;
     }
 }
 
 // File: contracts/timelock/CustomMasterChefJoeV2Timelock.sol
-
 
 // COPIED FROM https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/GovernorAlpha.sol
 // Copyright 2020 Compound Labs, Inc.
@@ -232,7 +243,6 @@ library SafeMath {
 pragma solidity 0.6.12;
 
 // XXX: import "./SafeMath.sol";
-
 
 contract CustomMasterChefJoeV2Timelock {
     using SafeMath for uint256;
@@ -286,29 +296,42 @@ contract CustomMasterChefJoeV2Timelock {
     mapping(bytes32 => bool) public queuedTransactions;
 
     modifier withinLimits(string memory signature, bytes memory data) {
-      if (keccak256(bytes(signature)) == keccak256(bytes(SET_DEV_PERCENT_SIG))) {
-        uint256 devPercent = abi.decode(data, (uint256));
-        require(devPercent <= devPercentLimit,
-                "CustomMasterChefJoeV2Timelock::withinLimits: devPercent must not exceed limit.");
-      } else if (keccak256(bytes(signature)) == keccak256(bytes(SET_TREASURY_PERCENT_SIG))) {
-        uint256 treasuryPercent = abi.decode(data, (uint256));
-        require(treasuryPercent <= treasuryPercentLimit,
-                "CustomMasterChefJoeV2Timelock::withinLimits: treasuryPercent must not exceed limit.");
-      } else if (keccak256(bytes(signature)) == keccak256(bytes(SET_INVESTOR_PERCENT_SIG))) {
-        uint256 investorPercent = abi.decode(data, (uint256));
-        require(investorPercent <= investorPercentLimit,
-                "CustomMasterChefJoeV2Timelock::withinLimits: investorPercent must not exceed limit.");
-      } else if (keccak256(bytes(signature)) ==
-                 keccak256(bytes(UPDATE_EMISSION_RATE_SIG))) {
-        uint256 joePerSec = abi.decode(data, (uint256));
-        require(joePerSec <= joePerSecLimit, "CustomMasterChefJoeV2Timelock::withinLimits: joePerSec must not exceed limit.");
-      }
-      _;
+        if (keccak256(bytes(signature)) == keccak256(bytes(SET_DEV_PERCENT_SIG))) {
+            uint256 devPercent = abi.decode(data, (uint256));
+            require(
+                devPercent <= devPercentLimit,
+                "CustomMasterChefJoeV2Timelock::withinLimits: devPercent must not exceed limit."
+            );
+        } else if (keccak256(bytes(signature)) == keccak256(bytes(SET_TREASURY_PERCENT_SIG))) {
+            uint256 treasuryPercent = abi.decode(data, (uint256));
+            require(
+                treasuryPercent <= treasuryPercentLimit,
+                "CustomMasterChefJoeV2Timelock::withinLimits: treasuryPercent must not exceed limit."
+            );
+        } else if (keccak256(bytes(signature)) == keccak256(bytes(SET_INVESTOR_PERCENT_SIG))) {
+            uint256 investorPercent = abi.decode(data, (uint256));
+            require(
+                investorPercent <= investorPercentLimit,
+                "CustomMasterChefJoeV2Timelock::withinLimits: investorPercent must not exceed limit."
+            );
+        } else if (keccak256(bytes(signature)) == keccak256(bytes(UPDATE_EMISSION_RATE_SIG))) {
+            uint256 joePerSec = abi.decode(data, (uint256));
+            require(
+                joePerSec <= joePerSecLimit,
+                "CustomMasterChefJoeV2Timelock::withinLimits: joePerSec must not exceed limit."
+            );
+        }
+        _;
     }
 
-    constructor(address admin_, uint256 delay_, uint256 devPercentLimit_,
-                uint256 treasuryPercentLimit_, uint256 investorPercentLimit_,
-                uint256 joePerSecLimit_) public {
+    constructor(
+        address admin_,
+        uint256 delay_,
+        uint256 devPercentLimit_,
+        uint256 treasuryPercentLimit_,
+        uint256 investorPercentLimit_,
+        uint256 joePerSecLimit_
+    ) public {
         require(
             delay_ >= MINIMUM_DELAY,
             "CustomMasterChefJoeV2Timelock::constructor: Delay must exceed minimum delay."
@@ -335,10 +358,7 @@ contract CustomMasterChefJoeV2Timelock {
             msg.sender == address(this),
             "CustomMasterChefJoeV2Timelock::setDelay: Call must come from CustomMasterChefJoeV2Timelock."
         );
-        require(
-            delay_ >= MINIMUM_DELAY,
-            "CustomMasterChefJoeV2Timelock::setDelay: Delay must exceed minimum delay."
-        );
+        require(delay_ >= MINIMUM_DELAY, "CustomMasterChefJoeV2Timelock::setDelay: Delay must exceed minimum delay.");
         require(
             delay_ <= MAXIMUM_DELAY,
             "CustomMasterChefJoeV2Timelock::setDelay: Delay must not exceed maximum delay."
@@ -385,18 +405,13 @@ contract CustomMasterChefJoeV2Timelock {
         bytes memory data,
         uint256 eta
     ) public withinLimits(signature, data) returns (bytes32) {
-        require(
-            msg.sender == admin,
-            "CustomMasterChefJoeV2Timelock::queueTransaction: Call must come from admin."
-        );
+        require(msg.sender == admin, "CustomMasterChefJoeV2Timelock::queueTransaction: Call must come from admin.");
         require(
             eta >= getBlockTimestamp().add(delay),
             "CustomMasterChefJoeV2Timelock::queueTransaction: Estimated execution block must satisfy delay."
         );
 
-        bytes32 txHash = keccak256(
-            abi.encode(target, value, signature, data, eta)
-        );
+        bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
         queuedTransactions[txHash] = true;
 
         emit QueueTransaction(txHash, target, value, signature, data, eta);
@@ -410,14 +425,9 @@ contract CustomMasterChefJoeV2Timelock {
         bytes memory data,
         uint256 eta
     ) public {
-        require(
-            msg.sender == admin,
-            "CustomMasterChefJoeV2Timelock::cancelTransaction: Call must come from admin."
-        );
+        require(msg.sender == admin, "CustomMasterChefJoeV2Timelock::cancelTransaction: Call must come from admin.");
 
-        bytes32 txHash = keccak256(
-            abi.encode(target, value, signature, data, eta)
-        );
+        bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
         queuedTransactions[txHash] = false;
 
         emit CancelTransaction(txHash, target, value, signature, data, eta);
@@ -430,14 +440,9 @@ contract CustomMasterChefJoeV2Timelock {
         bytes memory data,
         uint256 eta
     ) public payable returns (bytes memory) {
-        require(
-            msg.sender == admin,
-            "CustomMasterChefJoeV2Timelock::executeTransaction: Call must come from admin."
-        );
+        require(msg.sender == admin, "CustomMasterChefJoeV2Timelock::executeTransaction: Call must come from admin.");
 
-        bytes32 txHash = keccak256(
-            abi.encode(target, value, signature, data, eta)
-        );
+        bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
         require(
             queuedTransactions[txHash],
             "CustomMasterChefJoeV2Timelock::executeTransaction: Transaction hasn't been queued."
@@ -455,19 +460,11 @@ contract CustomMasterChefJoeV2Timelock {
 
         bytes memory callData;
 
-        callData = abi.encodePacked(
-            bytes4(keccak256(bytes(signature))),
-            data
-        );
+        callData = abi.encodePacked(bytes4(keccak256(bytes(signature))), data);
 
         // solium-disable-next-line security/no-call-value
-        (bool success, bytes memory returnData) = target.call.value(value)(
-            callData
-        );
-        require(
-            success,
-            "CustomMasterChefJoeV2Timelock::executeTransaction: Transaction execution reverted."
-        );
+        (bool success, bytes memory returnData) = target.call.value(value)(callData);
+        require(success, "CustomMasterChefJoeV2Timelock::executeTransaction: Transaction execution reverted.");
 
         emit ExecuteTransaction(txHash, target, value, signature, data, eta);
 

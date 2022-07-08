@@ -320,7 +320,7 @@ abstract contract Ownable is Context {
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    constructor () internal {
+    constructor() internal {
         address msgSender = _msgSender();
         _owner = msgSender;
         emit OwnershipTransferred(address(0), msgSender);
@@ -369,9 +369,6 @@ abstract contract Ownable is Context {
 
 // P1 - P3: OK
 pragma solidity 0.6.12;
-
-
-
 
 // JoeMakerV3 is MasterJoe's left hand and kinda a wizard. He can cook up Joe from pretty much anything!
 // This contract handles "serving up" rewards for xJoe holders by trading tokens collected from fees for Joe.

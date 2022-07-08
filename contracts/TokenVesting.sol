@@ -27,7 +27,6 @@ abstract contract Context {
 
 // File: @openzeppelin/contracts/access/Ownable.sol
 
-
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
@@ -50,7 +49,7 @@ abstract contract Ownable is Context {
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    constructor () internal {
+    constructor() internal {
         address msgSender = _msgSender();
         _owner = msgSender;
         emit OwnershipTransferred(address(0), msgSender);
@@ -125,7 +124,6 @@ interface IERC20 {
 // File: contracts/libraries/SafeERC20.sol
 
 pragma solidity 0.6.12;
-
 
 library SafeERC20 {
     function safeSymbol(IERC20 token) internal view returns (string memory) {
@@ -205,11 +203,7 @@ library SafeMath128 {
 
 // File: contracts/TokenVesting.sol
 
-
 pragma solidity ^0.6.0;
-
-
-
 
 /**
  * @title TokenVesting

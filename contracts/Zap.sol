@@ -23,11 +23,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryAdd(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         uint256 c = a + b;
         if (c < a) return (false, 0);
         return (true, c);
@@ -38,11 +34,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function trySub(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b > a) return (false, 0);
         return (true, a - b);
     }
@@ -52,11 +44,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMul(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
         // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
@@ -71,11 +59,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryDiv(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a / b);
     }
@@ -85,11 +69,7 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMod(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         if (b == 0) return (false, 0);
         return (true, a % b);
     }
@@ -272,9 +252,7 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
 
     /**
      * @dev Returns the remaining number of tokens that `spender` will be
@@ -283,10 +261,7 @@ interface IERC20 {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
@@ -331,11 +306,7 @@ interface IERC20 {
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 // File: @openzeppelin/contracts/utils/Address.sol
@@ -393,17 +364,11 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(
-            address(this).balance >= amount,
-            "Address: insufficient balance"
-        );
+        require(address(this).balance >= amount, "Address: insufficient balance");
 
         // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
         (bool success, ) = recipient.call{value: amount}("");
-        require(
-            success,
-            "Address: unable to send value, recipient may have reverted"
-        );
+        require(success, "Address: unable to send value, recipient may have reverted");
     }
 
     /**
@@ -424,10 +389,7 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data)
-        internal
-        returns (bytes memory)
-    {
+    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
         return functionCall(target, data, "Address: low-level call failed");
     }
 
@@ -461,13 +423,7 @@ library Address {
         bytes memory data,
         uint256 value
     ) internal returns (bytes memory) {
-        return
-            functionCallWithValue(
-                target,
-                data,
-                value,
-                "Address: low-level call with value failed"
-            );
+        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
     }
 
     /**
@@ -482,16 +438,11 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(
-            address(this).balance >= value,
-            "Address: insufficient balance for call"
-        );
+        require(address(this).balance >= value, "Address: insufficient balance for call");
         require(isContract(target), "Address: call to non-contract");
 
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory returndata) = target.call{value: value}(
-            data
-        );
+        (bool success, bytes memory returndata) = target.call{value: value}(data);
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -501,17 +452,8 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data)
-        internal
-        view
-        returns (bytes memory)
-    {
-        return
-            functionStaticCall(
-                target,
-                data,
-                "Address: low-level static call failed"
-            );
+    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
+        return functionStaticCall(target, data, "Address: low-level static call failed");
     }
 
     /**
@@ -538,16 +480,8 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data)
-        internal
-        returns (bytes memory)
-    {
-        return
-            functionDelegateCall(
-                target,
-                data,
-                "Address: low-level delegate call failed"
-            );
+    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
+        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
     }
 
     /**
@@ -614,10 +548,7 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(
-            token,
-            abi.encodeWithSelector(token.transfer.selector, to, value)
-        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
     }
 
     function safeTransferFrom(
@@ -626,10 +557,7 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(
-            token,
-            abi.encodeWithSelector(token.transferFrom.selector, from, to, value)
-        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
     }
 
     /**
@@ -652,10 +580,7 @@ library SafeERC20 {
             (value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeERC20: approve from non-zero to non-zero allowance"
         );
-        _callOptionalReturn(
-            token,
-            abi.encodeWithSelector(token.approve.selector, spender, value)
-        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
     }
 
     function safeIncreaseAllowance(
@@ -663,17 +588,8 @@ library SafeERC20 {
         address spender,
         uint256 value
     ) internal {
-        uint256 newAllowance = token.allowance(address(this), spender).add(
-            value
-        );
-        _callOptionalReturn(
-            token,
-            abi.encodeWithSelector(
-                token.approve.selector,
-                spender,
-                newAllowance
-            )
-        );
+        uint256 newAllowance = token.allowance(address(this), spender).add(value);
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
     function safeDecreaseAllowance(
@@ -685,14 +601,7 @@ library SafeERC20 {
             value,
             "SafeERC20: decreased allowance below zero"
         );
-        _callOptionalReturn(
-            token,
-            abi.encodeWithSelector(
-                token.approve.selector,
-                spender,
-                newAllowance
-            )
-        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
     /**
@@ -706,17 +615,11 @@ library SafeERC20 {
         // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
         // the target address contains contract code and also asserts for success in the low-level call.
 
-        bytes memory returndata = address(token).functionCall(
-            data,
-            "SafeERC20: low-level call failed"
-        );
+        bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
         if (returndata.length > 0) {
             // Return data is optional
             // solhint-disable-next-line max-line-length
-            require(
-                abi.decode(returndata, (bool)),
-                "SafeERC20: ERC20 operation did not succeed"
-            );
+            require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
         }
     }
 }
@@ -753,10 +656,7 @@ abstract contract Initializable {
      * @dev Modifier to protect an initializer function from being invoked twice.
      */
     modifier initializer() {
-        require(
-            _initializing || _isConstructor() || !_initialized,
-            "Initializable: contract is already initialized"
-        );
+        require(_initializing || _isConstructor() || !_initialized, "Initializable: contract is already initialized");
 
         bool isTopLevelCall = !_initializing;
         if (isTopLevelCall) {
@@ -840,10 +740,7 @@ pragma solidity >=0.6.0 <0.8.0;
 abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
     address private _owner;
 
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -891,10 +788,7 @@ abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
     }
@@ -907,11 +801,7 @@ abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
 pragma solidity >=0.5.0;
 
 interface IJoePair {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     function name() external pure returns (string memory);
@@ -924,10 +814,7 @@ interface IJoePair {
 
     function balanceOf(address owner) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 value) external returns (bool);
 
@@ -956,12 +843,7 @@ interface IJoePair {
     ) external;
 
     event Mint(address indexed sender, uint256 amount0, uint256 amount1);
-    event Burn(
-        address indexed sender,
-        uint256 amount0,
-        uint256 amount1,
-        address indexed to
-    );
+    event Burn(address indexed sender, uint256 amount0, uint256 amount1, address indexed to);
     event Swap(
         address indexed sender,
         uint256 amount0In,
@@ -997,9 +879,7 @@ interface IJoePair {
 
     function mint(address to) external returns (uint256 liquidity);
 
-    function burn(address to)
-        external
-        returns (uint256 amount0, uint256 amount1);
+    function burn(address to) external returns (uint256 amount0, uint256 amount1);
 
     function swap(
         uint256 amount0Out,
@@ -1167,15 +1047,9 @@ interface IJoeRouter01 {
         uint256 reserveOut
     ) external pure returns (uint256 amountIn);
 
-    function getAmountsOut(uint256 amountIn, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
+    function getAmountsOut(uint256 amountIn, address[] calldata path) external view returns (uint256[] memory amounts);
 
-    function getAmountsIn(uint256 amountOut, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
+    function getAmountsIn(uint256 amountOut, address[] calldata path) external view returns (uint256[] memory amounts);
 }
 
 // File: contracts/traderjoe/interfaces/IJoeRouter02.sol
@@ -1262,8 +1136,7 @@ contract Zap is OwnableUpgradeable {
     address private constant DAI = 0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10;
     address private constant WAVAX = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
 
-    IJoeRouter02 private constant ROUTER =
-        IJoeRouter02(0x4A586DAA5D5EDCD8182339C24291FB510fA4d271);
+    IJoeRouter02 private constant ROUTER = IJoeRouter02(0x4A586DAA5D5EDCD8182339C24291FB510fA4d271);
 
     /* ========== STATE VARIABLES ========== */
 
@@ -1314,12 +1187,7 @@ contract Zap is OwnableUpgradeable {
                 address other = _from == token0 ? token1 : token0;
                 _approveTokenIfNeeded(other);
                 uint256 sellAmount = amount.div(2);
-                uint256 otherAmount = _swap(
-                    _from,
-                    sellAmount,
-                    other,
-                    address(this)
-                );
+                uint256 otherAmount = _swap(_from, sellAmount, other, address(this));
                 ROUTER.addLiquidity(
                     _from,
                     other,
@@ -1331,11 +1199,7 @@ contract Zap is OwnableUpgradeable {
                     block.timestamp
                 );
             } else {
-                uint256 avaxAmount = _swapTokenForAVAX(
-                    _from,
-                    amount,
-                    address(this)
-                );
+                uint256 avaxAmount = _swapTokenForAVAX(_from, amount, address(this));
                 _swapAVAXToLP(_to, avaxAmount, msg.sender);
             }
         } else {
@@ -1367,15 +1231,7 @@ contract Zap is OwnableUpgradeable {
                     block.timestamp
                 );
             } else {
-                ROUTER.removeLiquidity(
-                    token0,
-                    token1,
-                    amount,
-                    0,
-                    0,
-                    msg.sender,
-                    block.timestamp
-                );
+                ROUTER.removeLiquidity(token0, token1, amount, 0, 0, msg.sender, block.timestamp);
             }
         }
     }
@@ -1403,11 +1259,7 @@ contract Zap is OwnableUpgradeable {
             if (token0 == WAVAX || token1 == WAVAX) {
                 address token = token0 == WAVAX ? token1 : token0;
                 uint256 swapValue = amount.div(2);
-                uint256 tokenAmount = _swapAVAXForToken(
-                    token,
-                    swapValue,
-                    address(this)
-                );
+                uint256 tokenAmount = _swapAVAXForToken(token, swapValue, address(this));
 
                 _approveTokenIfNeeded(token);
                 ROUTER.addLiquidityAVAX{value: amount.sub(swapValue)}(
@@ -1420,29 +1272,12 @@ contract Zap is OwnableUpgradeable {
                 );
             } else {
                 uint256 swapValue = amount.div(2);
-                uint256 token0Amount = _swapAVAXForToken(
-                    token0,
-                    swapValue,
-                    address(this)
-                );
-                uint256 token1Amount = _swapAVAXForToken(
-                    token1,
-                    amount.sub(swapValue),
-                    address(this)
-                );
+                uint256 token0Amount = _swapAVAXForToken(token0, swapValue, address(this));
+                uint256 token1Amount = _swapAVAXForToken(token1, amount.sub(swapValue), address(this));
 
                 _approveTokenIfNeeded(token0);
                 _approveTokenIfNeeded(token1);
-                ROUTER.addLiquidity(
-                    token0,
-                    token1,
-                    token0Amount,
-                    token1Amount,
-                    0,
-                    0,
-                    receiver,
-                    block.timestamp
-                );
+                ROUTER.addLiquidity(token0, token1, token0Amount, token1Amount, 0, 0, receiver, block.timestamp);
             }
         }
     }
@@ -1465,12 +1300,7 @@ contract Zap is OwnableUpgradeable {
             path[1] = token;
         }
 
-        uint256[] memory amounts = ROUTER.swapExactAVAXForTokens{value: value}(
-            0,
-            path,
-            receiver,
-            block.timestamp
-        );
+        uint256[] memory amounts = ROUTER.swapExactAVAXForTokens{value: value}(0, path, receiver, block.timestamp);
         return amounts[amounts.length - 1];
     }
 
@@ -1491,13 +1321,7 @@ contract Zap is OwnableUpgradeable {
             path[1] = WAVAX;
         }
 
-        uint256[] memory amounts = ROUTER.swapExactTokensForAVAX(
-            amount,
-            0,
-            path,
-            receiver,
-            block.timestamp
-        );
+        uint256[] memory amounts = ROUTER.swapExactTokensForAVAX(amount, 0, path, receiver, block.timestamp);
         return amounts[amounts.length - 1];
     }
 
@@ -1519,18 +1343,12 @@ contract Zap is OwnableUpgradeable {
             path[0] = _from;
             path[1] = intermediate;
             path[2] = _to;
-        } else if (
-            intermediate != address(0) &&
-            (_from == intermediate || _to == intermediate)
-        ) {
+        } else if (intermediate != address(0) && (_from == intermediate || _to == intermediate)) {
             // [VAI, BUSD] or [BUSD, VAI]
             path = new address[](2);
             path[0] = _from;
             path[1] = _to;
-        } else if (
-            intermediate != address(0) &&
-            routePairAddresses[_from] == routePairAddresses[_to]
-        ) {
+        } else if (intermediate != address(0) && routePairAddresses[_from] == routePairAddresses[_to]) {
             // [VAI, DAI] or [VAI, USDC]
             path = new address[](3);
             path[0] = _from;
@@ -1549,19 +1367,14 @@ contract Zap is OwnableUpgradeable {
             path[2] = WAVAX;
             path[3] = routePairAddresses[_to];
             path[4] = _to;
-        } else if (
-            intermediate != address(0) &&
-            routePairAddresses[_from] != address(0)
-        ) {
+        } else if (intermediate != address(0) && routePairAddresses[_from] != address(0)) {
             // [VAI, BUSD, WAVAX, BUNNY]
             path = new address[](4);
             path[0] = _from;
             path[1] = intermediate;
             path[2] = WAVAX;
             path[3] = _to;
-        } else if (
-            intermediate != address(0) && routePairAddresses[_to] != address(0)
-        ) {
+        } else if (intermediate != address(0) && routePairAddresses[_to] != address(0)) {
             // [BUNNY, WAVAX, BUSD, VAI]
             path = new address[](4);
             path[0] = _from;
@@ -1581,22 +1394,13 @@ contract Zap is OwnableUpgradeable {
             path[2] = _to;
         }
 
-        uint256[] memory amounts = ROUTER.swapExactTokensForTokens(
-            amount,
-            0,
-            path,
-            receiver,
-            block.timestamp
-        );
+        uint256[] memory amounts = ROUTER.swapExactTokensForTokens(amount, 0, path, receiver, block.timestamp);
         return amounts[amounts.length - 1];
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
-    function setRoutePairAddress(address asset, address route)
-        external
-        onlyOwner
-    {
+    function setRoutePairAddress(address asset, address route) external onlyOwner {
         routePairAddresses[asset] = route;
     }
 

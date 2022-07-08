@@ -61,7 +61,11 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
 
     /**
      * @dev Emitted when `value` tokens are moved from one account (`from`) to
@@ -79,7 +83,6 @@ interface IERC20 {
 }
 
 // File: @openzeppelin/contracts/math/SafeMath.sol
-
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -248,7 +251,11 @@ library SafeMath {
      *
      * - Subtraction cannot overflow.
      */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b <= a, errorMessage);
         return a - b;
     }
@@ -268,7 +275,11 @@ library SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         return a / b;
     }
@@ -288,14 +299,17 @@ library SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         return a % b;
     }
 }
 
 // File: @openzeppelin/contracts/utils/Address.sol
-
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -327,7 +341,9 @@ library Address {
 
         uint256 size;
         // solhint-disable-next-line no-inline-assembly
-        assembly { size := extcodesize(account) }
+        assembly {
+            size := extcodesize(account)
+        }
         return size > 0;
     }
 
@@ -351,7 +367,7 @@ library Address {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
         // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
-        (bool success, ) = recipient.call{ value: amount }("");
+        (bool success, ) = recipient.call{value: amount}("");
         require(success, "Address: unable to send value, recipient may have reverted");
     }
 
@@ -374,7 +390,7 @@ library Address {
      * _Available since v3.1._
      */
     function functionCall(address target, bytes memory data) internal returns (bytes memory) {
-      return functionCall(target, data, "Address: low-level call failed");
+        return functionCall(target, data, "Address: low-level call failed");
     }
 
     /**
@@ -383,7 +399,11 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+    function functionCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
     }
 
@@ -398,7 +418,11 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value
+    ) internal returns (bytes memory) {
         return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
     }
 
@@ -408,12 +432,17 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCallWithValue(address target, bytes memory data, uint256 value, string memory errorMessage) internal returns (bytes memory) {
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
         require(address(this).balance >= value, "Address: insufficient balance for call");
         require(isContract(target), "Address: call to non-contract");
 
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory returndata) = target.call{ value: value }(data);
+        (bool success, bytes memory returndata) = target.call{value: value}(data);
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -433,7 +462,11 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data, string memory errorMessage) internal view returns (bytes memory) {
+    function functionStaticCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal view returns (bytes memory) {
         require(isContract(target), "Address: static call to non-contract");
 
         // solhint-disable-next-line avoid-low-level-calls
@@ -457,7 +490,11 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+    function functionDelegateCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
         require(isContract(target), "Address: delegate call to non-contract");
 
         // solhint-disable-next-line avoid-low-level-calls
@@ -465,7 +502,11 @@ library Address {
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
-    function _verifyCallResult(bool success, bytes memory returndata, string memory errorMessage) private pure returns(bytes memory) {
+    function _verifyCallResult(
+        bool success,
+        bytes memory returndata,
+        string memory errorMessage
+    ) private pure returns (bytes memory) {
         if (success) {
             return returndata;
         } else {
@@ -487,11 +528,7 @@ library Address {
 
 // File: @openzeppelin/contracts/token/ERC20/SafeERC20.sol
 
-
 pragma solidity >=0.6.0 <0.8.0;
-
-
-
 
 /**
  * @title SafeERC20
@@ -506,11 +543,20 @@ library SafeERC20 {
     using SafeMath for uint256;
     using Address for address;
 
-    function safeTransfer(IERC20 token, address to, uint256 value) internal {
+    function safeTransfer(
+        IERC20 token,
+        address to,
+        uint256 value
+    ) internal {
         _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
     }
 
-    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
+    function safeTransferFrom(
+        IERC20 token,
+        address from,
+        address to,
+        uint256 value
+    ) internal {
         _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
     }
 
@@ -521,24 +567,40 @@ library SafeERC20 {
      * Whenever possible, use {safeIncreaseAllowance} and
      * {safeDecreaseAllowance} instead.
      */
-    function safeApprove(IERC20 token, address spender, uint256 value) internal {
+    function safeApprove(
+        IERC20 token,
+        address spender,
+        uint256 value
+    ) internal {
         // safeApprove should only be called when setting an initial allowance,
         // or when resetting it to zero. To increase and decrease it, use
         // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'
         // solhint-disable-next-line max-line-length
-        require((value == 0) || (token.allowance(address(this), spender) == 0),
+        require(
+            (value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeERC20: approve from non-zero to non-zero allowance"
         );
         _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
     }
 
-    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+    function safeIncreaseAllowance(
+        IERC20 token,
+        address spender,
+        uint256 value
+    ) internal {
         uint256 newAllowance = token.allowance(address(this), spender).add(value);
         _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
-    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {
-        uint256 newAllowance = token.allowance(address(this), spender).sub(value, "SafeERC20: decreased allowance below zero");
+    function safeDecreaseAllowance(
+        IERC20 token,
+        address spender,
+        uint256 value
+    ) internal {
+        uint256 newAllowance = token.allowance(address(this), spender).sub(
+            value,
+            "SafeERC20: decreased allowance below zero"
+        );
         _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
@@ -554,7 +616,8 @@ library SafeERC20 {
         // the target address contains contract code and also asserts for success in the low-level call.
 
         bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
-        if (returndata.length > 0) { // Return data is optional
+        if (returndata.length > 0) {
+            // Return data is optional
             // solhint-disable-next-line max-line-length
             require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
         }
@@ -562,7 +625,6 @@ library SafeERC20 {
 }
 
 // File: @openzeppelin/contracts/utils/Context.sol
-
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -589,7 +651,6 @@ abstract contract Context {
 
 // File: @openzeppelin/contracts/access/Ownable.sol
 
-
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
@@ -612,7 +673,7 @@ abstract contract Ownable is Context {
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    constructor () internal {
+    constructor() internal {
         address msgSender = _msgSender();
         _owner = msgSender;
         emit OwnershipTransferred(address(0), msgSender);
@@ -658,15 +719,10 @@ abstract contract Ownable is Context {
 
 // File: contracts/traderjoe/interfaces/IJoePair.sol
 
-
 pragma solidity >=0.5.0;
 
 interface IJoePair {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     function name() external pure returns (string memory);
@@ -679,10 +735,7 @@ interface IJoePair {
 
     function balanceOf(address owner) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 value) external returns (bool);
 
@@ -711,12 +764,7 @@ interface IJoePair {
     ) external;
 
     event Mint(address indexed sender, uint256 amount0, uint256 amount1);
-    event Burn(
-        address indexed sender,
-        uint256 amount0,
-        uint256 amount1,
-        address indexed to
-    );
+    event Burn(address indexed sender, uint256 amount0, uint256 amount1, address indexed to);
     event Swap(
         address indexed sender,
         uint256 amount0In,
@@ -752,9 +800,7 @@ interface IJoePair {
 
     function mint(address to) external returns (uint256 liquidity);
 
-    function burn(address to)
-        external
-        returns (uint256 amount0, uint256 amount1);
+    function burn(address to) external returns (uint256 amount0, uint256 amount1);
 
     function swap(
         uint256 amount0Out,
@@ -771,7 +817,6 @@ interface IJoePair {
 }
 
 // File: contracts/traderjoe/interfaces/IJoeRouter01.sol
-
 
 pragma solidity >=0.6.2;
 
@@ -923,29 +968,17 @@ interface IJoeRouter01 {
         uint256 reserveOut
     ) external pure returns (uint256 amountIn);
 
-    function getAmountsOut(uint256 amountIn, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
+    function getAmountsOut(uint256 amountIn, address[] calldata path) external view returns (uint256[] memory amounts);
 
-    function getAmountsIn(uint256 amountOut, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
+    function getAmountsIn(uint256 amountOut, address[] calldata path) external view returns (uint256[] memory amounts);
 }
 
 // File: contracts/traderjoe/interfaces/IJoeFactory.sol
 
-
 pragma solidity >=0.5.0;
 
 interface IJoeFactory {
-    event PairCreated(
-        address indexed token0,
-        address indexed token1,
-        address pair,
-        uint256
-    );
+    event PairCreated(address indexed token0, address indexed token1, address pair, uint256);
 
     function feeTo() external view returns (address);
 
@@ -953,18 +986,13 @@ interface IJoeFactory {
 
     function migrator() external view returns (address);
 
-    function getPair(address tokenA, address tokenB)
-        external
-        view
-        returns (address pair);
+    function getPair(address tokenA, address tokenB) external view returns (address pair);
 
     function allPairs(uint256) external view returns (address pair);
 
     function allPairsLength() external view returns (uint256);
 
-    function createPair(address tokenA, address tokenB)
-        external
-        returns (address pair);
+    function createPair(address tokenA, address tokenB) external returns (address pair);
 
     function setFeeTo(address) external;
 
@@ -974,7 +1002,6 @@ interface IJoeFactory {
 }
 
 // File: contracts/traderjoe/libraries/SafeMath.sol
-
 
 pragma solidity =0.6.12;
 
@@ -996,24 +1023,15 @@ library SafeMathJoe {
 
 // File: contracts/traderjoe/libraries/JoeLibrary.sol
 
-
 pragma solidity >=0.5.0;
-
-
 
 library JoeLibrary {
     using SafeMathJoe for uint256;
 
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
-    function sortTokens(address tokenA, address tokenB)
-        internal
-        pure
-        returns (address token0, address token1)
-    {
+    function sortTokens(address tokenA, address tokenB) internal pure returns (address token0, address token1) {
         require(tokenA != tokenB, "JoeLibrary: IDENTICAL_ADDRESSES");
-        (token0, token1) = tokenA < tokenB
-            ? (tokenA, tokenB)
-            : (tokenB, tokenA);
+        (token0, token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
         require(token0 != address(0), "JoeLibrary: ZERO_ADDRESS");
     }
 
@@ -1045,12 +1063,8 @@ library JoeLibrary {
         address tokenB
     ) internal view returns (uint256 reserveA, uint256 reserveB) {
         (address token0, ) = sortTokens(tokenA, tokenB);
-        (uint256 reserve0, uint256 reserve1, ) = IJoePair(
-            pairFor(factory, tokenA, tokenB)
-        ).getReserves();
-        (reserveA, reserveB) = tokenA == token0
-            ? (reserve0, reserve1)
-            : (reserve1, reserve0);
+        (uint256 reserve0, uint256 reserve1, ) = IJoePair(pairFor(factory, tokenA, tokenB)).getReserves();
+        (reserveA, reserveB) = tokenA == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
     }
 
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
@@ -1060,10 +1074,7 @@ library JoeLibrary {
         uint256 reserveB
     ) internal pure returns (uint256 amountB) {
         require(amountA > 0, "JoeLibrary: INSUFFICIENT_AMOUNT");
-        require(
-            reserveA > 0 && reserveB > 0,
-            "JoeLibrary: INSUFFICIENT_LIQUIDITY"
-        );
+        require(reserveA > 0 && reserveB > 0, "JoeLibrary: INSUFFICIENT_LIQUIDITY");
         amountB = amountA.mul(reserveB) / reserveA;
     }
 
@@ -1074,10 +1085,7 @@ library JoeLibrary {
         uint256 reserveOut
     ) internal pure returns (uint256 amountOut) {
         require(amountIn > 0, "JoeLibrary: INSUFFICIENT_INPUT_AMOUNT");
-        require(
-            reserveIn > 0 && reserveOut > 0,
-            "JoeLibrary: INSUFFICIENT_LIQUIDITY"
-        );
+        require(reserveIn > 0 && reserveOut > 0, "JoeLibrary: INSUFFICIENT_LIQUIDITY");
         uint256 amountInWithFee = amountIn.mul(997);
         uint256 numerator = amountInWithFee.mul(reserveOut);
         uint256 denominator = reserveIn.mul(1000).add(amountInWithFee);
@@ -1091,10 +1099,7 @@ library JoeLibrary {
         uint256 reserveOut
     ) internal pure returns (uint256 amountIn) {
         require(amountOut > 0, "JoeLibrary: INSUFFICIENT_OUTPUT_AMOUNT");
-        require(
-            reserveIn > 0 && reserveOut > 0,
-            "JoeLibrary: INSUFFICIENT_LIQUIDITY"
-        );
+        require(reserveIn > 0 && reserveOut > 0, "JoeLibrary: INSUFFICIENT_LIQUIDITY");
         uint256 numerator = reserveIn.mul(amountOut).mul(1000);
         uint256 denominator = reserveOut.sub(amountOut).mul(997);
         amountIn = (numerator / denominator).add(1);
@@ -1110,11 +1115,7 @@ library JoeLibrary {
         amounts = new uint256[](path.length);
         amounts[0] = amountIn;
         for (uint256 i; i < path.length - 1; i++) {
-            (uint256 reserveIn, uint256 reserveOut) = getReserves(
-                factory,
-                path[i],
-                path[i + 1]
-            );
+            (uint256 reserveIn, uint256 reserveOut) = getReserves(factory, path[i], path[i + 1]);
             amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut);
         }
     }
@@ -1129,11 +1130,7 @@ library JoeLibrary {
         amounts = new uint256[](path.length);
         amounts[amounts.length - 1] = amountOut;
         for (uint256 i = path.length - 1; i > 0; i--) {
-            (uint256 reserveIn, uint256 reserveOut) = getReserves(
-                factory,
-                path[i - 1],
-                path[i]
-            );
+            (uint256 reserveIn, uint256 reserveOut) = getReserves(factory, path[i - 1], path[i]);
             amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut);
         }
     }
@@ -1141,15 +1138,7 @@ library JoeLibrary {
 
 // File: contracts/JoeRoll.sol
 
-
 pragma solidity 0.6.12;
-
-
-
-
-
-
-
 
 // JoeRoll helps your migrate your existing Uniswap LP tokens to TraderJoe LP ones
 contract JoeRoll is Ownable {
@@ -1203,12 +1192,7 @@ contract JoeRoll is Ownable {
         );
 
         // Add liquidity to the new router
-        (uint256 pooledAmountA, uint256 pooledAmountB) = addLiquidity(
-            tokenA,
-            tokenB,
-            amountA,
-            amountB
-        );
+        (uint256 pooledAmountA, uint256 pooledAmountB) = addLiquidity(tokenA, tokenB, amountA, amountB);
 
         // Send remaining tokens to msg.sender
         if (amountA > pooledAmountA) {
@@ -1240,23 +1224,14 @@ contract JoeRoll is Ownable {
         pair.transferFrom(msg.sender, address(pair), liquidity);
         (uint256 amount0, uint256 amount1) = pair.burn(address(this));
         (address token0, ) = JoeLibrary.sortTokens(tokenA, tokenB);
-        (amountA, amountB) = tokenA == token0
-            ? (amount0, amount1)
-            : (amount1, amount0);
+        (amountA, amountB) = tokenA == token0 ? (amount0, amount1) : (amount1, amount0);
         require(amountA >= amountAMin, "JoeRoll: INSUFFICIENT_A_AMOUNT");
         require(amountB >= amountBMin, "JoeRoll: INSUFFICIENT_B_AMOUNT");
     }
 
     // calculates the CREATE2 address for a pair without making any external calls
-    function pairForOldRouter(address tokenA, address tokenB)
-        internal
-        view
-        returns (address pair)
-    {
-        (address token0, address token1) = JoeLibrary.sortTokens(
-            tokenA,
-            tokenB
-        );
+    function pairForOldRouter(address tokenA, address tokenB) internal view returns (address pair) {
+        (address token0, address token1) = JoeLibrary.sortTokens(tokenA, tokenB);
         pair = address(
             uint256(
                 keccak256(
@@ -1277,12 +1252,7 @@ contract JoeRoll is Ownable {
         uint256 amountADesired,
         uint256 amountBDesired
     ) internal returns (uint256 amountA, uint256 amountB) {
-        (amountA, amountB) = _addLiquidity(
-            tokenA,
-            tokenB,
-            amountADesired,
-            amountBDesired
-        );
+        (amountA, amountB) = _addLiquidity(tokenA, tokenB, amountADesired, amountBDesired);
         address pair = JoeLibrary.pairFor(router.factory(), tokenA, tokenB);
         IERC20(tokenA).safeTransfer(pair, amountA);
         IERC20(tokenB).safeTransfer(pair, amountB);
@@ -1300,27 +1270,15 @@ contract JoeRoll is Ownable {
         if (factory.getPair(tokenA, tokenB) == address(0)) {
             factory.createPair(tokenA, tokenB);
         }
-        (uint256 reserveA, uint256 reserveB) = JoeLibrary.getReserves(
-            address(factory),
-            tokenA,
-            tokenB
-        );
+        (uint256 reserveA, uint256 reserveB) = JoeLibrary.getReserves(address(factory), tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
             (amountA, amountB) = (amountADesired, amountBDesired);
         } else {
-            uint256 amountBOptimal = JoeLibrary.quote(
-                amountADesired,
-                reserveA,
-                reserveB
-            );
+            uint256 amountBOptimal = JoeLibrary.quote(amountADesired, reserveA, reserveB);
             if (amountBOptimal <= amountBDesired) {
                 (amountA, amountB) = (amountADesired, amountBOptimal);
             } else {
-                uint256 amountAOptimal = JoeLibrary.quote(
-                    amountBDesired,
-                    reserveB,
-                    reserveA
-                );
+                uint256 amountAOptimal = JoeLibrary.quote(amountBDesired, reserveB, reserveA);
                 assert(amountAOptimal <= amountADesired);
                 (amountA, amountB) = (amountAOptimal, amountBDesired);
             }

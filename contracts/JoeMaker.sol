@@ -47,19 +47,12 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     // EIP 2612
     function permit(
@@ -77,26 +70,19 @@ interface IERC20 {
 
 pragma solidity 0.6.12;
 
-
 library SafeERC20 {
     function safeSymbol(IERC20 token) internal view returns (string memory) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x95d89b41)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x95d89b41));
         return success && data.length > 0 ? abi.decode(data, (string)) : "???";
     }
 
     function safeName(IERC20 token) internal view returns (string memory) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x06fdde03)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x06fdde03));
         return success && data.length > 0 ? abi.decode(data, (string)) : "???";
     }
 
     function safeDecimals(IERC20 token) public view returns (uint8) {
-        (bool success, bytes memory data) = address(token).staticcall(
-            abi.encodeWithSelector(0x313ce567)
-        );
+        (bool success, bytes memory data) = address(token).staticcall(abi.encodeWithSelector(0x313ce567));
         return success && data.length == 32 ? abi.decode(data, (uint8)) : 18;
     }
 
@@ -105,13 +91,8 @@ library SafeERC20 {
         address to,
         uint256 amount
     ) internal {
-        (bool success, bytes memory data) = address(token).call(
-            abi.encodeWithSelector(0xa9059cbb, to, amount)
-        );
-        require(
-            success && (data.length == 0 || abi.decode(data, (bool))),
-            "SafeERC20: Transfer failed"
-        );
+        (bool success, bytes memory data) = address(token).call(abi.encodeWithSelector(0xa9059cbb, to, amount));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: Transfer failed");
     }
 
     function safeTransferFrom(
@@ -122,24 +103,16 @@ library SafeERC20 {
         (bool success, bytes memory data) = address(token).call(
             abi.encodeWithSelector(0x23b872dd, from, address(this), amount)
         );
-        require(
-            success && (data.length == 0 || abi.decode(data, (bool))),
-            "SafeERC20: TransferFrom failed"
-        );
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SafeERC20: TransferFrom failed");
     }
 }
 
 // File: contracts/traderjoe/interfaces/IJoeERC20.sol
 
-
 pragma solidity >=0.5.0;
 
 interface IJoeERC20 {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     function name() external pure returns (string memory);
@@ -152,10 +125,7 @@ interface IJoeERC20 {
 
     function balanceOf(address owner) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 value) external returns (bool);
 
@@ -186,15 +156,10 @@ interface IJoeERC20 {
 
 // File: contracts/traderjoe/interfaces/IJoePair.sol
 
-
 pragma solidity >=0.5.0;
 
 interface IJoePair {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     function name() external pure returns (string memory);
@@ -207,10 +172,7 @@ interface IJoePair {
 
     function balanceOf(address owner) external view returns (uint256);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 value) external returns (bool);
 
@@ -239,12 +201,7 @@ interface IJoePair {
     ) external;
 
     event Mint(address indexed sender, uint256 amount0, uint256 amount1);
-    event Burn(
-        address indexed sender,
-        uint256 amount0,
-        uint256 amount1,
-        address indexed to
-    );
+    event Burn(address indexed sender, uint256 amount0, uint256 amount1, address indexed to);
     event Swap(
         address indexed sender,
         uint256 amount0In,
@@ -280,9 +237,7 @@ interface IJoePair {
 
     function mint(address to) external returns (uint256 liquidity);
 
-    function burn(address to)
-        external
-        returns (uint256 amount0, uint256 amount1);
+    function burn(address to) external returns (uint256 amount0, uint256 amount1);
 
     function swap(
         uint256 amount0Out,
@@ -300,16 +255,10 @@ interface IJoePair {
 
 // File: contracts/traderjoe/interfaces/IJoeFactory.sol
 
-
 pragma solidity >=0.5.0;
 
 interface IJoeFactory {
-    event PairCreated(
-        address indexed token0,
-        address indexed token1,
-        address pair,
-        uint256
-    );
+    event PairCreated(address indexed token0, address indexed token1, address pair, uint256);
 
     function feeTo() external view returns (address);
 
@@ -317,18 +266,13 @@ interface IJoeFactory {
 
     function migrator() external view returns (address);
 
-    function getPair(address tokenA, address tokenB)
-        external
-        view
-        returns (address pair);
+    function getPair(address tokenA, address tokenB) external view returns (address pair);
 
     function allPairs(uint256) external view returns (address pair);
 
     function allPairsLength() external view returns (uint256);
 
-    function createPair(address tokenA, address tokenB)
-        external
-        returns (address pair);
+    function createPair(address tokenA, address tokenB) external returns (address pair);
 
     function setFeeTo(address) external;
 
@@ -351,10 +295,7 @@ contract BoringOwnableData {
 }
 
 contract BoringOwnable is BoringOwnableData {
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /// @notice `owner` defaults to msg.sender on construction.
     constructor() public {
@@ -374,10 +315,7 @@ contract BoringOwnable is BoringOwnableData {
     ) public onlyOwner {
         if (direct) {
             // Checks
-            require(
-                newOwner != address(0) || renounce,
-                "Ownable: zero address"
-            );
+            require(newOwner != address(0) || renounce, "Ownable: zero address");
 
             // Effects
             emit OwnershipTransferred(owner, newOwner);
@@ -394,10 +332,7 @@ contract BoringOwnable is BoringOwnableData {
         address _pendingOwner = pendingOwner;
 
         // Checks
-        require(
-            msg.sender == _pendingOwner,
-            "Ownable: caller != pending owner"
-        );
+        require(msg.sender == _pendingOwner, "Ownable: caller != pending owner");
 
         // Effects
         emit OwnershipTransferred(owner, _pendingOwner);
@@ -414,15 +349,8 @@ contract BoringOwnable is BoringOwnableData {
 
 // File: contracts/JoeMaker.sol
 
-
 // P1 - P3: OK
 pragma solidity 0.6.12;
-
-
-
-
-
-
 
 // JoeMaker is MasterJoe's left hand and kinda a wizard. He can cook up Joe from pretty much anything!
 // This contract handles "serving up" rewards for xJoe holders by trading tokens collected from fees for Joe.
@@ -485,10 +413,7 @@ contract JoeMaker is BoringOwnable {
     // C1 - C24: OK
     function setBridge(address token, address bridge) external onlyOwner {
         // Checks
-        require(
-            token != joe && token != wavax && token != bridge,
-            "JoeMaker: Invalid bridge"
-        );
+        require(token != joe && token != wavax && token != bridge, "JoeMaker: Invalid bridge");
 
         // Effects
         _bridges[token] = bridge;
@@ -510,17 +435,14 @@ contract JoeMaker is BoringOwnable {
     //     As the size of the JoeBar has grown, this requires large amounts of funds and isn't super profitable anymore
     //     The onlyEOA modifier prevents this being done with a flash loan.
     // C1 - C24: OK
-    function convert(address token0, address token1) external onlyEOA() {
+    function convert(address token0, address token1) external onlyEOA {
         _convert(token0, token1);
     }
 
     // F1 - F10: OK, see convert
     // C1 - C24: OK
     // C3: Loop is under control of the caller
-    function convertMultiple(
-        address[] calldata token0,
-        address[] calldata token1
-    ) external onlyEOA() {
+    function convertMultiple(address[] calldata token0, address[] calldata token1) external onlyEOA {
         // TODO: This can be optimized a fair bit, but this is safer and simpler for now
         uint256 len = token0.length;
         for (uint256 i = 0; i < len; i++) {
@@ -537,23 +459,13 @@ contract JoeMaker is BoringOwnable {
         require(address(pair) != address(0), "JoeMaker: Invalid pair");
         // balanceOf: S1 - S4: OK
         // transfer: X1 - X5: OK
-        IERC20(address(pair)).safeTransfer(
-            address(pair),
-            pair.balanceOf(address(this))
-        );
+        IERC20(address(pair)).safeTransfer(address(pair), pair.balanceOf(address(this)));
         // X1 - X5: OK
         (uint256 amount0, uint256 amount1) = pair.burn(address(this));
         if (token0 != pair.token0()) {
             (amount0, amount1) = (amount1, amount0);
         }
-        emit LogConvert(
-            msg.sender,
-            token0,
-            token1,
-            amount0,
-            amount1,
-            _convertStep(token0, token1, amount0, amount1)
-        );
+        emit LogConvert(msg.sender, token0, token1, amount0, amount1, _convertStep(token0, token1, amount0, amount1));
     }
 
     // F1 - F10: OK
@@ -588,36 +500,20 @@ contract JoeMaker is BoringOwnable {
             joeOut = _toJOE(token0, amount0).add(amount1);
         } else if (token0 == wavax) {
             // eg. AVAX - USDC
-            joeOut = _toJOE(
-                wavax,
-                _swap(token1, wavax, amount1, address(this)).add(amount0)
-            );
+            joeOut = _toJOE(wavax, _swap(token1, wavax, amount1, address(this)).add(amount0));
         } else if (token1 == wavax) {
             // eg. USDT - AVAX
-            joeOut = _toJOE(
-                wavax,
-                _swap(token0, wavax, amount0, address(this)).add(amount1)
-            );
+            joeOut = _toJOE(wavax, _swap(token0, wavax, amount0, address(this)).add(amount1));
         } else {
             // eg. MIC - USDT
             address bridge0 = bridgeFor(token0);
             address bridge1 = bridgeFor(token1);
             if (bridge0 == token1) {
                 // eg. MIC - USDT - and bridgeFor(MIC) = USDT
-                joeOut = _convertStep(
-                    bridge0,
-                    token1,
-                    _swap(token0, bridge0, amount0, address(this)),
-                    amount1
-                );
+                joeOut = _convertStep(bridge0, token1, _swap(token0, bridge0, amount0, address(this)), amount1);
             } else if (bridge1 == token0) {
                 // eg. WBTC - DSD - and bridgeFor(DSD) = WBTC
-                joeOut = _convertStep(
-                    token0,
-                    bridge1,
-                    amount0,
-                    _swap(token1, bridge1, amount1, address(this))
-                );
+                joeOut = _convertStep(token0, bridge1, amount0, _swap(token1, bridge1, amount1, address(this)));
             } else {
                 joeOut = _convertStep(
                     bridge0,
@@ -648,16 +544,12 @@ contract JoeMaker is BoringOwnable {
         (uint256 reserve0, uint256 reserve1, ) = pair.getReserves();
         uint256 amountInWithFee = amountIn.mul(997);
         if (fromToken == pair.token0()) {
-            amountOut =
-                amountIn.mul(997).mul(reserve1) /
-                reserve0.mul(1000).add(amountInWithFee);
+            amountOut = amountIn.mul(997).mul(reserve1) / reserve0.mul(1000).add(amountInWithFee);
             IERC20(fromToken).safeTransfer(address(pair), amountIn);
             pair.swap(0, amountOut, to, new bytes(0));
             // TODO: Add maximum slippage?
         } else {
-            amountOut =
-                amountIn.mul(997).mul(reserve0) /
-                reserve1.mul(1000).add(amountInWithFee);
+            amountOut = amountIn.mul(997).mul(reserve0) / reserve1.mul(1000).add(amountInWithFee);
             IERC20(fromToken).safeTransfer(address(pair), amountIn);
             pair.swap(amountOut, 0, to, new bytes(0));
             // TODO: Add maximum slippage?
@@ -666,10 +558,7 @@ contract JoeMaker is BoringOwnable {
 
     // F1 - F10: OK
     // C1 - C24: OK
-    function _toJOE(address token, uint256 amountIn)
-        internal
-        returns (uint256 amountOut)
-    {
+    function _toJOE(address token, uint256 amountIn) internal returns (uint256 amountOut) {
         // X1 - X5: OK
         amountOut = _swap(token, joe, amountIn, bar);
     }
